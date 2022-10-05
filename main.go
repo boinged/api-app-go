@@ -1,14 +1,13 @@
 package main
 
 import (
-	"fmt"
-	"net/http"
 	"github.com/boinged/api-app-go/config"
+	"github.com/boinged/api-app-go/endpoint"
+	"net/http"
 )
 
 func main() {
-	http.HandleFunc("/", func(response http.ResponseWriter, request *http.Request) {
-		fmt.Fprint(response, "Welcome")
-	})
-	http.ListenAndServe(":" + config.Port, nil)
+	http.HandleFunc("/", endpoint.Health)
+	http.HandleFunc("/message", endpoint.Message)
+	http.ListenAndServe(":"+config.Port, nil)
 }
