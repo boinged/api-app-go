@@ -1,10 +1,12 @@
 package endpoint
 
 import (
-	"fmt"
+	"encoding/json"
 	"net/http"
 )
 
 func Message(response http.ResponseWriter, request *http.Request) {
-	fmt.Fprint(response, "Hello world!")
+	response.Header().Set("Content-Type", "application/json")
+	response.WriteHeader(http.StatusOK)
+	json.NewEncoder(response).Encode("Hello world!")
 }
