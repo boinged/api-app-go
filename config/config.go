@@ -2,6 +2,7 @@ package config
 
 import "os"
 
+var DatabaseURI string
 var Port string
 
 func init() {
@@ -9,4 +10,5 @@ func init() {
 	if Port == "" {
 		Port = "8080"
 	}
+	DatabaseURI = os.Getenv("DATABASE_URI")
 }
