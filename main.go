@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/boinged/api-app-go/config"
@@ -15,9 +14,13 @@ func main() {
 	}
 
 	database := database.Connect(config.DatabaseURI)
-	fmt.Println(database.Name())
+	collection := database.Collection("message")
 
-	http.HandleFunc("/", endpoint.Health)
-	http.HandleFunc("/message", endpoint.Message)
+	healthEndpoint := endpoint.HealthEndpoint{}
+	http.HandleFunc("/", healthEndpoint.Execute)
+
+	messageEndpoint := endpoint.MessageEndpoint{Collection: collection}
+	http.HandleFunc("/message", messageEndpoint.Execute)
+
 	http.ListenAndServe(":"+config.Port, nil)
 }
