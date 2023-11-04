@@ -1,13 +1,11 @@
 steps:
 - name: 'gcr.io/cloud-builders/docker'
   id: Build
-  args: ['build', '-t', 'eu.gcr.io/$PROJECT_ID/api-go:$SHORT_SHA', '.']
+  args: ['build', '-t', 'europe-north1-docker.pkg.dev/$PROJECT_ID/images/api-go:$SHORT_SHA', '.']
 - name: 'gcr.io/cloud-builders/docker'
   id: Push
-  args: ['push', 'eu.gcr.io/$PROJECT_ID/api-go:$SHORT_SHA']
+  args: ['push', 'europe-north1-docker.pkg.dev/$PROJECT_ID/images/api-go:$SHORT_SHA']
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   id: Deploy
   entrypoint: gcloud
-  args: ['run', 'deploy', '$_SERVICE_NAME', '--image', 'eu.gcr.io/$PROJECT_ID/api-go:$SHORT_SHA', '--region', '$LOCATION']
-images:
-- eu.gcr.io/$PROJECT_ID/api-go:$SHORT_SHA
+  args: ['run', 'deploy', '$_SERVICE_NAME', '--image', 'europe-north1-docker.pkg.dev/$PROJECT_ID/images/api-go:$SHORT_SHA', '--region', '$LOCATION']
